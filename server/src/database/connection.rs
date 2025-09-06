@@ -1,3 +1,4 @@
+use diesel::{Connection, MysqlConnection};
 use dotenvy::dotenv;
 use std::env;
 
@@ -8,23 +9,15 @@ fn load_config() -> Result<(), Box<dyn std::error::Error>> {
         Err(_) => println!("No .env file found, using system environment"),
     }
 
-    // Validate required environment variables
-    let required_vars = [
-        "DATABASE_HOST",
-        "DATABASE_SOURCE_NAME",
-        "DATABASE_PORT",
-        "DATABASE_USER",
-        "DATABASE_PASSWORD",
-    ];
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
-    for var in &required_vars {
-        env::var(var).map_err(|_| panic!("Required environment variable {} is not set", var))?;
-    }
+    MysqlConnection::establish(&database_url)
+        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url));
 
     println!("All required environment variables are set");
     Ok(())
 }
 
-pub fn initialize() {
+pub fn establish() {
     let _ = load_config();
 }
