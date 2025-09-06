@@ -4,8 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-diesel = { version = "2.2.0", features = ["mysql"] }
+clap = "4.5.47"
 dotenvy = "0.15.7"
+mysql = "26.0.1"
 shell-words = "1.1.0"
 tokio = { version = "1.47.1", features = ["process", "rt", "macros"] }
 which = "8.0.0"

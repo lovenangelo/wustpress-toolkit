@@ -1,5 +1,7 @@
+use database::connection::init_db_pool;
+
 mod database;
 
 fn main() {
-    database::connection::establish();
+    let _ = init_db_pool();
 }
